@@ -1,0 +1,1 @@
+docker build -f docker/StatlerWaldorfCorp.TeamService.dockerfile -t vvilelaj/team-service .

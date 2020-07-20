@@ -8,13 +8,11 @@ using StatlerWaldorfCorp.TeamService.Persistence;
 
 namespace StatlerWaldorfCorp.TeamService
 {
+    [ApiController]
+    [Route("[controller]")]
     public class TeamsController : Controller
     {
         ITeamRepository repository;
-
-        public TeamsController()
-        {
-        }
 
         public TeamsController(ITeamRepository repo)
         {
