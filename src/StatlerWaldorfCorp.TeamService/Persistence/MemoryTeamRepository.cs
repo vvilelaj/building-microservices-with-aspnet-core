@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using StatlerWaldorfCorp.TeamService;
 using StatlerWaldorfCorp.TeamService.Models;
 
 namespace StatlerWaldorfCorp.TeamService.Persistence
@@ -20,14 +23,46 @@ namespace StatlerWaldorfCorp.TeamService.Persistence
             _teams = teams;
         }
 
-        public IEnumerable<Team> GetTeams()
+        public IEnumerable<Team> List()
         {
             return _teams;
         }
 
-        public void AddTeam(Team t)
+        public Team Get(Guid id)
         {
-            _teams.Add(t);
+            return _teams.FirstOrDefault(t => t.ID == id);
+        }
+
+        public Team Update(Team t)
+        {
+            Team team = this.Delete(t.ID);
+
+            if (team != null)
+            {
+                team = this.Add(t);
+            }
+
+            return team;
+        }
+
+        public Team Add(Team team)
+        {
+            _teams.Add(team);
+            return team;
+        }
+
+        public Team Delete(Guid id)
+        {
+            var q = _teams.Where(t => t.ID == id);
+            Team team = null;
+
+            if (q.Count() > 0)
+            {
+                team = q.First();
+                _teams.Remove(team);
+            }
+
+            return team;
         }
     }
 }
